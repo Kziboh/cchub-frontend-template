@@ -1,0 +1,43 @@
+image: node:20
+
+stages:
+  - npm
+  - build
+  - prod
+
+npm:
+  stage: npm
+  only:
+    - merge_requests
+
+  script:
+    - npm config set registry ${CI_NPM_REGISTRY}
+    - npm i
+  cache:
+    paths:
+      - node_modules/
+  artifacts:
+    expire_in: 1 days
+    when: on_success
+    paths:
+      - node_modules/
+
+build:
+  stage: build
+  only:
+    - merge_requests
+  dependencies:
+    - npm
+  script:
+    - npm run build
+
+Deploy-to-Prod:
+  stage: prod
+  when: manual
+  allow_failure: false
+  script:
+    - bash deploy/prod_deploy.sh
+  rules:
+    - if: $CI_COMMIT_BRANCH == "main"
+  environment:
+    name: prod
