@@ -1,11 +1,13 @@
-FROM node:20-alpine AS deps
+export const generateDockerFile=(nodeVersion='node:22-alpine', port=3000)=>{
+    return `# Install dependencies only when needed
+FROM ${nodeVersion} AS deps
 RUN apk add --no-cache libc6-compat
 WORKDIR /app
 
 COPY package*.json ./
 RUN npm ci
 
-FROM node:20-alpine AS builder
+FROM ${nodeVersion} AS builder
 WORKDIR /app
 COPY --from=deps /app/node_modules ./node_modules
 COPY . .
@@ -14,7 +16,7 @@ ENV NEXT_TELEMETRY_DISABLED=1
 
 RUN npm run build
 
-FROM node:20-alpine AS runner
+FROM ${nodeVersion}
 WORKDIR /app
 
 ENV NODE_ENV=production
@@ -30,7 +32,8 @@ COPY --from=builder /app/package.json ./package.json
 
 USER nextjs
 
-EXPOSE 3000
-ENV PORT=3000
+EXPOSE ${port}
+ENV PORT=${port}
 
-CMD ["npm", "start"]
+CMD ["npm", "start"]`
+}
