@@ -2,7 +2,7 @@
 // template: bash `${VAR}` must be written `\${VAR}`, and any literal backslash
 // must be doubled. Only `${repoURL}` and `${projectDirName}` are real JS
 // interpolations.
-export const generateStageDeployScript = (repoURL, projectDirName) => {
+const generateStageDeployScript = (repoURL, projectDirName) => {
   return `#!/bin/bash
 
 # any future command that fails will exit the script
@@ -86,3 +86,5 @@ echo "==========================================="
 echo "All staging servers updated successfully."
 `
 }
+
+export default generateStageDeployScript;
