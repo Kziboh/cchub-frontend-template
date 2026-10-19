@@ -18,7 +18,7 @@ Open [http://localhost:3000](http://localhost:3000).
 3. Add routes under `src/app`.
 4. Copy `.env.example` to `.env.local` and set `NEXT_PUBLIC_SITE_URL`.
 5. Drop product assets into `public/`.
-6. In GitLab, set `CI_NPM_REGISTRY`, `PROD_SERVER` and `PROD_PRIVATE_KEY`, and check the project path in `deploy/prod_update.sh`.
+6. The `Dockerfile`, `.gitlab-ci.yml` and `deploy/` scripts are not stored here. They are generated for each project from `templates/`, which should be removed from the generated project.
 
 Shared and dashboard-specific components are not part of the template yet; they will be added under `src/components`.
 
@@ -26,8 +26,7 @@ Shared and dashboard-specific components are not part of the template yet; they 
 
 - Next.js App Router, React, TypeScript
 - Tailwind CSS v4
-- Docker / docker-compose
-- GitLab CI with a manual production deploy job
+- Docker Compose (Dockerfile, GitLab CI and deploy scripts are generated from `templates/`)
 
 ## Scripts
 
@@ -40,6 +39,10 @@ npm run lint
 
 ## Docker
 
+Once the generated `Dockerfile` is in place:
+
 ```bash
 docker compose up --build
 ```
+
+Set `PORT` in `.env` to change the port (default 3000).
