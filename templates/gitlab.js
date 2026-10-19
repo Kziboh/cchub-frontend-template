@@ -1,5 +1,5 @@
 
-export const generateGitlabScript =(
+const generateGitlabScript =(
     nodeVersion="22",
     awsRegion="us-east-2",
     awsRoleArn="arn:aws:iam::272639848682:role/Gitlab-ci"
@@ -88,3 +88,5 @@ deploy-to-prod:
     name: production
 `
 }
+
+export default generateGitlabScript;

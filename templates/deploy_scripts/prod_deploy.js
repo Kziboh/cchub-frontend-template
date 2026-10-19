@@ -1,4 +1,4 @@
-export const generateProdDeployScript = (repoURL, projectDirName, awsRegion = "us-east-2") => {
+const generateProdDeployScript = (repoURL, projectDirName, awsRegion = "us-east-2") => {
   return `#!/bin/bash
 
 set -e
@@ -98,3 +98,4 @@ echo "==========================================="
 echo "All production servers updated successfully."
 `
 }
+export default generateProdDeployScript;

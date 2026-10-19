@@ -1,4 +1,4 @@
-export const generateDockerFile=(nodeVersion='node:22-alpine', port=3000)=>{
+const generateDockerFile=(nodeVersion='node:22-alpine', port=3000)=>{
     return `# Install dependencies only when needed
 FROM ${nodeVersion} AS deps
 RUN apk add --no-cache libc6-compat
@@ -37,3 +37,5 @@ ENV PORT=${port}
 
 CMD ["npm", "start"]`
 }
+
+export default generateDockerFile;
